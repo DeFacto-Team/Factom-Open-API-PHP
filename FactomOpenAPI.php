@@ -20,13 +20,13 @@ class FactomOpenAPI
 	    $this->api_key = $api_key;
     }
     /**
-    * Create a new chain
-    * $extIds, array — Tags that can be used to identify your chain
-    * $content, string — (optional) This is the data that will make up the first entry in your new chain
+    * Create chain
+    * $extIds, array — One or many external ids identifying new chain. Should be sent as array of strings.
+    * $content, string — (optional) The content of the first entry of the chain.
     */
     public function createChain($extIds, $content="")
     {	
-	    $chain["extIds"] = $this->helper_base64_encode($extIds);
+	$chain["extIds"] = $this->helper_base64_encode($extIds);
         $chain["content"] = $this->helper_base64_encode($content);
         $res = $this->make_request('/chains', $chain, 'POST');
         if (isset($res["result"])) {
@@ -36,10 +36,10 @@ class FactomOpenAPI
     }
 
     /**
-    * Create a new entry for the selected chain
-    * $chainId, string — ChainID of Factom chain
-    * $extIds, array — (optional) Tags that can be used to identify your entry
-    * $content, string — (optional) This is the data that will be stored directly on the blockchain
+    * Create entry into chain
+    * $chainId, string — Chain ID of the Factom chain, where to add new entry.
+    * $extIds, array — (optional) One or many external ids identifying new chain. Should be sent as array of strings.
+    * $content, string — (optional) The content of the new entry.
     */
     public function createEntry($chainId, $extIds=NULL, $content="")
     {
@@ -61,8 +61,8 @@ class FactomOpenAPI
     }
 
     /**
-    * Create a new entry for the selected chain
-    * $extIds, array — Tags that can be used to identify your entry
+    * Search user's chains by extIds
+    * $extIds, array — One or many external IDs, that used for search. Should be sent as array of strings.
     */
     public function searchChains($extIds, $start=0, $limit=0, $status=NULL, $sort=NULL)
     {
@@ -103,8 +103,8 @@ class FactomOpenAPI
     }
 
     /**
-    * Create a new entry for the selected chain
-    * $extIds, array — Tags that can be used to identify your entry
+    * Search chain entries
+    * $extIds, array — One or many external IDs, that used for search. Should be sent as array of strings.
     */
     public function searchChainEntries($chainId, $extIds, $start=0, $limit=0, $status=NULL, $sort=NULL)
     {
@@ -151,8 +151,8 @@ class FactomOpenAPI
     }
 
     /**
-    * Create a new entry for the selected chain
-    * $extIds, array — Tags that can be used to identify your entry
+    * Generic factomd interface
+    * $method, string — factomd API call
     */
     public function factomd($method, $params="")
     {
@@ -160,7 +160,7 @@ class FactomOpenAPI
     }
 
     /**
-    * Returns information about a specific entry on Factom
+    * Get user's chains
     */
     public function getChains($start=0, $limit=0, $status=NULL, $sort=NULL)
     {	    
@@ -200,7 +200,8 @@ class FactomOpenAPI
     }
 
     /**
-    * Returns information about a specific entry on Factom
+    * Get chain
+    * $chainId, string — Chain ID of the Factom chain.
     */
     public function getChain($chainId)
     {	    
@@ -212,7 +213,8 @@ class FactomOpenAPI
     }
 
     /**
-    * Returns information about a specific entry on Factom
+    * Get chain entries
+    * $chainId, string — Chain ID of the Factom chain.
     */
     public function getChainEntries($chainId, $start=0, $limit=0, $status=NULL, $sort=NULL)
     {	    
@@ -257,7 +259,8 @@ class FactomOpenAPI
     }
 
     /**
-    * Returns information about a specific entry on Factom
+    * Get entry
+    * $entryHash, string — EntryHash of the Factom entry
     */
     public function getEntry($entryHash)
     {	    
@@ -274,7 +277,8 @@ class FactomOpenAPI
     }
 
     /**
-    * Returns information about a specific entry on Factom
+    * Get chain first entry
+    * $chainId, string — Chain ID of the Factom chain.
     */
     public function getChainFirstEntry($chainId)
     {	    
@@ -292,7 +296,8 @@ class FactomOpenAPI
 
 
     /**
-    * Returns information about a specific entry on Factom
+    * Get chain last entry
+    * $chainId, string — Chain ID of the Factom chain.
     */
     public function getChainLastEntry($chainId)
     {	    
@@ -309,7 +314,7 @@ class FactomOpenAPI
     }
 
     /**
-    * Returns information about API usage & limits
+    * Get API user
     */
     public function getUser()
     {	    
