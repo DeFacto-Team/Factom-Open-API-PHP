@@ -1,4 +1,4 @@
-# PHP SDK for Factom Open API
+# PHP client for Factom Open API
 
 ## Usage
 1. Require library
@@ -6,14 +6,14 @@
 require_once("FactomOpenAPI.php");
 ```
 
-2. Initialize Factom Open API
+2. Initialize client
 ```php
 $endpoint = "https://demo.openapi.de-facto.pro";
 $api_key = "qB2AK07xSgnR6FvvZcoJrPA575qhRILq";
 $factom = new FactomOpenAPI($endpoint, $api_key);
 ```
 
-3. Use library
+3. Use client to work with Factom Open API
 ```php
 // Get user chains
 $chains = $factom->getChains();
