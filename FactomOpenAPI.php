@@ -17,7 +17,7 @@ class FactomOpenAPI
     public function __construct($endpoint, $api_key)
     {
         $this->endpoint = $endpoint."/".self::VERSION;
-	    $this->api_key = $api_key;
+	$this->api_key = $api_key;
     }
     /**
     * Create chain
@@ -43,10 +43,10 @@ class FactomOpenAPI
     */
     public function createEntry($chainId, $extIds=NULL, $content="")
     {
-	    $entry["chainId"] = $chainId;
-	    $entry["content"] = $this->helper_base64_encode($content);
-	    if (isset($extIds)) {
-	    	$entry["extIds"] = $this->helper_base64_encode($extIds);	    
+	$entry["chainId"] = $chainId;
+	$entry["content"] = $this->helper_base64_encode($content);
+	if (isset($extIds)) {
+	    $entry["extIds"] = $this->helper_base64_encode($extIds);	    
         }
         $res = $this->make_request('/entries', $entry, 'POST');
         if (isset($res["result"])) {
@@ -57,7 +57,7 @@ class FactomOpenAPI
                 $res["result"]["extIds"] = $this->helper_base64_decode($res["result"]["extIds"]);
             }
         }
-	    return $res;
+	return $res;
     }
 
     /**
@@ -99,7 +99,7 @@ class FactomOpenAPI
                 }
             }
         }
-	    return $res;
+	return $res;
     }
 
     /**
@@ -147,7 +147,7 @@ class FactomOpenAPI
                 }
             }
         }
-	    return $res;
+	return $res;
     }
 
     /**
@@ -320,7 +320,15 @@ class FactomOpenAPI
     {	    
         return $this->make_request('/user');
     }
-    
+
+    /**
+    * Get API version
+    */
+    public function getAPIInfo()
+    {	    
+        return $this->make_request('/');
+    }
+	
     /**
     * Make the request to Factom Open API
     */
