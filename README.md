@@ -145,6 +145,7 @@ $entry = $factom->getEntry($entryHash);
 $heights = $factom->factomd("heights");
 
 // Example of factomd API call with params: 'chain-head'
+// Params sent as JSON string (not object)
 $params = "{\"chainid\":\"9b41e5213471aa7dc9bbb1e7107b5c0009d94cd0eb553629984fd07c7039c3db\"}";
 $chainHead = $factom->factomd("chain-head", $params);
 ```
