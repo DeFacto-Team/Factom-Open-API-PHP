@@ -16,13 +16,28 @@ $factom = new FactomOpenAPI($endpoint, $api_key);
 ```
 
 ### 3. Use client to work with Factom Open API
-Get API info
+1. Get API info
 ```php
 // Get API version
 $chains = $factom->getAPIInfo();
 ```
 
-Get chains
+2. Get user info
+```php
+// Get user info
+$user = $factom->getUser();
+```
+
+3. Create a chain
+```php
+// Creates chain on the Factom blockchain
+$extIds[0] = "My new chain";
+$extIds[1] = "Second ExtID";
+$content = "Content of the first entry"; // optional
+$chain = $factom->createChain($extIds, $content);
+```
+
+4. Get chains
 ```php
 // Get all user’s chains
 $chains = $factom->getChains();
@@ -46,23 +61,14 @@ $chains = $factom->getChains(0, 0, NULL, "asc");
 $chains = $factom->getChains(40, 20, "queue", "asc");
 ```
 
-Create a chain
-```php
-// Creates chain on the Factom blockchain
-$extIds[0] = "My new chain";
-$extIds[1] = "Second ExtID";
-$content = "Content of the first entry"; // optional
-$chain = $factom->createChain($extIds, $content);
-```
-
-Get chain
+5. Get chain
 ```php
 // Get Factom chain by Chain ID
 $chainId = "fb5ad150761da70e090cb2582445681e4c13107ca863f9037eaa2947cf7d225c";
 $chain = $factom->getChain($chainId);
 ```
 
-Get chain entries
+6. Get chain entries
 ```php
 // Get entries of Factom chain
 $chainId = "fb5ad150761da70e090cb2582445681e4c13107ca863f9037eaa2947cf7d225c";
@@ -73,7 +79,7 @@ $entries = $factom->getChainEntries($chainId);
 $entries = $factom->getChainEntries($chainId, 40, 20, "queue", "asc");
 ```
 
-Get first/last entry of the chain
+7. Get first/last entry of the chain
 ```php
 $chainId = "fb5ad150761da70e090cb2582445681e4c13107ca863f9037eaa2947cf7d225c";
 
@@ -84,9 +90,61 @@ $firstEntry = $factom->getChainFirstEntry($chainId);
 $firstEntry = $factom->getChainLastEntry($chainId);
 ```
 
-Search entries of chain
+8. Search user's chains by external ids
+```php
+// Search for chains with tag "Forum Thread"
+$extIds[0] = "Forum Thread";
+$chains = $factom->searchChains($extIds);
+
+// Search for entries with 2 tags simultaneously 
+$extIds[1] = "v1.0.0";
+$chains2 = $factom->searchChains($extIds);
+
+// Filters and params may be applied to results
+// Example: start=40, limit=20, status="completed", sort="asc"
+$chains = $factom->searchChains($extIds, 40, 20, "completed", "asc");
+```
+
+9. Search chain entries by external ids
 ```php
 // Search entries into Factom chain by external id(s)
 $chainId = "fb5ad150761da70e090cb2582445681e4c13107ca863f9037eaa2947cf7d225c";
+// Search for entries with tag "Forum Post"
+$extIds[0] = "Forum Post";
+$entries = $factom->searchChainEntries($chainId, $extIds);
+
+// Search for entries with 2 tags simultaneously 
+$extIds[1] = "v1.0.0";
+$entries2 = $factom->searchChainEntries($chainId, $extIds);
+
+// Filters and params may be applied to results
+// Example: start=40, limit=20, status="processing", sort="asc"
+$entries = $factom->searchChainEntries($chainId, $extIds, 40, 20, "processing", "asc");
 ```
 
+10. Create an entry
+```php
+// Create entry in the Factom chain
+$chainId = "fb5ad150761da70e090cb2582445681e4c13107ca863f9037eaa2947cf7d225c";
+$extIds[0] = "My new entry";
+$extIds[1] = "Second ExtID";
+$content = "Content of the new entry";
+$entry = $factom->createEntry($chainId, $extIds, $content);
+```
+
+11. Get entry
+```php
+// Get Factom entry by EntryHash
+$entryHash = "dc2160b99b5f46f156e54bdebc81aef3243884b68b2c0c05e4741910738273f2";
+$entry = $factom->getEntry($entryHash);
+```
+
+12. Generic factomd interface
+```php
+// Example of factomd API call without params: 'heights'
+$heights = $factom->factomd("heights");
+
+// Example of factomd API call with params: 'chainhead'
+$params = "{'chainid':'9b41e5213471aa7dc9bbb1e7107b5c0009d94cd0eb553629984fd07c7039c3db'}";
+$chainhead = $factom->factomd("chain-head", $params);
+```
