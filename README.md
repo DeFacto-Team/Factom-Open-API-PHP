@@ -144,7 +144,7 @@ $entry = $factom->getEntry($entryHash);
 // Example of factomd API call without params: 'heights'
 $heights = $factom->factomd("heights");
 
-// Example of factomd API call with params: 'chainhead'
-$params = "{'chainid':'9b41e5213471aa7dc9bbb1e7107b5c0009d94cd0eb553629984fd07c7039c3db'}";
-$chainhead = $factom->factomd("chain-head", $params);
+// Example of factomd API call with params: 'chain-head'
+$params = "{\"chainid\":\"9b41e5213471aa7dc9bbb1e7107b5c0009d94cd0eb553629984fd07c7039c3db\"}";
+$chainHead = $factom->factomd("chain-head", $params);
 ```
